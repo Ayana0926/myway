@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>MyPage2</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+
+   <!--FontAwesomeから-->
+    <script src="https://kit.fontawesome.com/9e463b2629.js" crossorigin="anonymous"></script>
+
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap" rel="stylesheet"> 
+  </head>
+
+  <body>
+    <header>
+      <h1>My Way</h1>
+      <div class="header-list">
+      <ul>
+        <li><%= link_to "ホーム", reviews_path %></li>
+        <li><%= link_to "新規投稿",new_review_path %></li>
+        <% if user_signed_in? %>
+         <li><%= link_to "マイページへ", user_path(current_user.id) %></li>
+         <li><%= button_to 'ログアウト', destroy_user_session_path, method: :delete %></li>
+        <% else %>
+         <li><%= link_to "新規登録", new_user_registration_path %></li>
+         <li><%= link_to "ログイン", new_user_session_path %></li>
+        <% end %>
+      </ul>
+      </div>
+    </header>
+    <main>
+      <%= yield %>
+    </main> 
+    <footer>
+      My Way<br>
+      Created by AO.
+    </footer>
+  </body>
+</html>
+

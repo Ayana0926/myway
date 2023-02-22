@@ -1,0 +1,27 @@
+<h3><%= @review.created_at %>に投稿されました</h3>
+<div class="review">
+  <p><%= @review.about %></p>
+  <p><%= image_tag @review.image_url, size: "250x200" if @review.image? %></p>
+    <% if user_signed_in? %>
+      <% if current_user.already_liked?(@review) %>
+        <%= button_to review_like_path(@review), method: :delete do %>
+            <i class="fas fa-heart"></i><%= @review.likes.count %>
+        <% end %>
+      <% else %>
+        <%= button_to review_likes_path(@review), method: :post do %>
+            <i class="far fa-heart"></i><%= @review.likes.count %>
+        <% end %>
+      <% end %>
+    <% else %>
+            <i class="far fa-heart"></i><%= @review.likes.count %>
+    <% end %>
+<% if user_signed_in? && current_user.id == @review.user_id %>    
+    <%= link_to "編集する", edit_review_path(@review.id) %>
+    <%= button_to "削除する", review_path(@review.id), method: :delete %>
+<% end %>  
+</div>
+<!--タグ表示-->
+<% @review.tags.each do |tag| %>
+  <span><%= tag.name %></span>
+<% end %>
+<%= link_to "review一覧に戻る", reviews_path %>

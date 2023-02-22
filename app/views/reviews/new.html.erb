@@ -1,0 +1,41 @@
+<h3>新規レビュー投稿ページ</h3>
+  <%= form_tag({controller:"reviews",action:"new"}, method: :get) do %>
+    <span>タグ追加はこちらから</span>
+    <%= text_field_tag :tag %>
+    <%= submit_tag 'タグを追加' %>
+  <% end %>
+
+<%= form_for @review do |f| %>
+  
+  <!--タグ投稿を可能にする-->
+  <div class='form-group'>
+  <%= f.collection_check_boxes(:tag_ids, Tag.all, :id, :name) do |tag| %>
+      <div class='form-check'>
+          <%= tag.label class: 'form-check-label' do %>
+              <%= tag.check_box class: 'form-check-input' %>
+              <%= tag.text %>
+          <% end %>
+      </div>
+  <% end %>
+  </div>
+
+
+
+<!--データ型がtextで自由記述の入力フォーム-->
+  <div class="field">
+    <%= f.label :場所の詳細や行ってみての感想など  %>
+    <br>
+    <%= f.text_area :about, :size => "30x4" %>
+  </div>
+
+  <!--画像投稿-->
+  <div class="field">
+    <%= f.label :image %>
+    <%= f.file_field :image %>
+  </div>
+
+  <%= f.submit "レビューを投稿" %>
+<% end %>
+
+
+<%= link_to "一覧に戻る", reviews_path %>
